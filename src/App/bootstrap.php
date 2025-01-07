@@ -5,11 +5,11 @@ declare(strict_types=1);
 include __DIR__ . "/../../vendor/autoload.php";
 
 use Framework\App;
+use App\Controllers\HomeController;
+
 
 $app = new App();
 
-$app->get('/', ['App\Controllers\HomeControllers', 'home']);
-
-dd($app);
+$app->get('/', [[HomeController::class], 'home']);
 
 return $app;
