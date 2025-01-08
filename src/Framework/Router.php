@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Framework;
 
-class Router{
+class Router
+{
     private array $routes = [];
 
-    public function add(string $method, string $path, array $controller){
+    public function add(string $method, string $path, array $controller)
+    {
         $path = $this->normalizePath($path);
+
         $this->routes[] = [
             'path' => $path,
             'method' => strtoupper($method),
@@ -16,7 +19,8 @@ class Router{
         ];
     }
 
-    private function normalizePath(string $path): string{
+    private function normalizePath(string $path): string
+    {
         $path = trim($path, '/');
         $path = "/{$path}/";
         $path = preg_replace('#[/]{2,}#', '/', $path);
@@ -24,17 +28,24 @@ class Router{
         return $path;
     }
 
-    public function dispatch(string $path, string $method){
+    public function dispatch(string $path, string $method)
+    {
         $path = $this->normalizePath($path);
         $method = strtoupper($method);
 
-        foreach($this->routes as $route){
-            if(!preg_match("#^{$route['path']}$#", $path) || 
-            $route['method'] !== $method){
+        foreach ($this->routes as $route) {
+            if (
+                !preg_match("#^{$route['path']}$#", $path) ||
+                $route['method'] !== $method
+            ) {
                 continue;
             }
 
-            echo 'route found';
+            [$class, $function] = $route['controller'];
+
+            $controllerInstance = new $class;
+
+            $controllerInstance->{$function}();
         }
     }
 }
