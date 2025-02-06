@@ -8,10 +8,12 @@ class App
 {
 
     private Router $router;
+    private Conteiner $conteiner;
 
     public function __construct()
     {
         $this->router = new Router;
+        $this->conteiner = new Conteiner;
     }
 
     public function run()
