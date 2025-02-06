@@ -10,10 +10,15 @@ class App
     private Router $router;
     private Conteiner $conteiner;
 
-    public function __construct()
+    public function __construct(string $conteinerDefinitionsPath = null)
     {
         $this->router = new Router;
         $this->conteiner = new Conteiner;
+
+        if ($conteinerDefinitionsPath) {
+            $conteinerDefinitions = include $conteinerDefinitionsPath;
+            $this->conteiner->addDefinitions($conteinerDefinitions);
+        }
     }
 
     public function run()
