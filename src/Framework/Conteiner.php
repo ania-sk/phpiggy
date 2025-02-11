@@ -8,11 +8,10 @@ use ReflectionClass, ReflectionNamedType;
 
 use Framework\Exceptions\ContainerException;
 
-use function PHPSTORM_META\type;
-
 class Conteiner
 {
     private array $definitions = [];
+    private array $resolved = [];
 
     public function addDefinitions(array $newDefinitions)
     {
@@ -66,8 +65,14 @@ class Conteiner
             throw new ContainerException("Class {$id} does not exist in conteiner.");
         }
 
+        if (array_key_exists($id, $this->resolved)) {
+            return $this->resolved[$id];
+        }
+
         $factory = $this->definitions[$id];
         $dependency = $factory();
+
+        $this->resolved[$id] = $dependency;
 
         return $dependency;
     }
