@@ -10,7 +10,13 @@ $db = new Database('mysql', [
     'dbname' => 'phpiggy',
 ], 'root', '');
 
-$query = "SELECT * FROM products";
+$search = "Hats";
+$query = "SELECT * FROM products WHERE name=:name";
 
-$stmt = $db->connection->query($query, PDO::FETCH_ASSOC);
+$stmt = $db->connection->prepare($query);
+
+$stmt->bindValue('name', $search, PDO::PARAM_STR);
+
+$stmt->execute();
+
 var_dump($stmt->fetchAll(PDO::FETCH_OBJ));
