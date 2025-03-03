@@ -12,5 +12,5 @@ $db = new Database('mysql', [
 
 $query = "SELECT * FROM products";
 
-$stmt = $db->connection->query($query);
-var_dump($stmt->fetchAll());
+$stmt = $db->connection->query($query, PDO::FETCH_ASSOC);
+var_dump($stmt->fetchAll(PDO::FETCH_OBJ));
