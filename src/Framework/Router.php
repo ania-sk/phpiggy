@@ -36,7 +36,7 @@ class Router
     public function dispatch(string $path, string $method, Conteiner $container = null)
     {
         $path = $this->normalizePath($path);
-        $method = strtoupper($method);
+        $method = strtoupper($_POST['_METHOD'] ?? $method);
 
         foreach ($this->routes as $route) {
             if (
