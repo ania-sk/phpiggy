@@ -44,4 +44,12 @@ class ReceiptService
             ]);
         }
     }
+
+    public function upload(array $file)
+    {
+        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $newFilename = bin2hex(random_bytes(16));
+
+        dd($newFilename);
+    }
 }
