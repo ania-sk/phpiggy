@@ -72,4 +72,14 @@ class ReceiptService
             ]
         );
     }
+
+    public function getReceipt(string $id)
+    {
+        $receipt = $this->db->query(
+            "SELECT * FROM receipts WHERE id = :id",
+            ['id' => $id]
+        )->find();
+
+        return $receipt;
+    }
 }
