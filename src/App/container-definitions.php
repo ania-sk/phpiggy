@@ -7,7 +7,8 @@ use Framework\{TemplateEngine, Database, Conteiner};
 use App\Services\{
     ValidatorService,
     UserService,
-    TransactionService
+    TransactionService,
+    ReceiptService
 };
 
 return [
@@ -27,5 +28,10 @@ return [
         $db = $conteiner->get(Database::class);
 
         return new TransactionService($db);
+    },
+    ReceiptService::class => function (Conteiner $conteiner) {
+        $db = $conteiner->get(Database::class);
+
+        return new ReceiptService($db);
     }
 ];
