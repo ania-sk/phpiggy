@@ -6,6 +6,7 @@ namespace App\Services;
 
 use Framework\Database;
 use Framework\Exceptions\ValidationException;
+use App\Config\Paths;
 
 class ReceiptService
 {
@@ -50,6 +51,12 @@ class ReceiptService
         $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $newFilename = bin2hex(random_bytes(16));
 
-        dd($newFilename);
+        $uploadPath = Paths::STORAGE_UPLOADS . "/" . $newFilename;
+
+        if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
+            throw new ValidationException([
+                'receipt' => ['Failed to upload file']
+            ]);
+        }
     }
 }
